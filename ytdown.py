@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from pytube import *
 import os
 def convert(seconds):
