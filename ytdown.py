@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pytube import *
+import pytube
 import os
 def convert(seconds):
     seconds = seconds % (24 * 3600)
