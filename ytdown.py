@@ -2,6 +2,7 @@
 from pytube import *
 import pytube
 import os
+
 def convert(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
@@ -56,7 +57,7 @@ def video(yt, link):
                     print("wrong input bye......try again")
                 try:
                     print("starting the video download")
-                    yt.streams.filter(res=reso,file_extension="mp4").first().download()
+                    yt.streams.filter(res=reso,mime_type="video/mp4",progressive=True).first().download()
                 except:
                     print("wrong resolusion..try again")
                 else:
