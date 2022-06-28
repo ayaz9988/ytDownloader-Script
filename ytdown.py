@@ -30,7 +30,8 @@ def video(yt, link):
         print("input a number")
     else:
         if inp == 1:
-            print(f"avalible resolusion: {set([stream.resolution for stream in yt.streams if stream.resolution != None])}")
+            helper = set([stream.resolution for stream in yt.streams.filter(mime_type="video/mp4",progressive=True) if stream.resolution != None])
+            print(f"avalible resolusion: {helper}")
             print("select resolusion:")
             print("[1] 1080\t[2] 720")
             print("[3] 480 \t[4] 360")
