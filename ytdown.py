@@ -82,7 +82,7 @@ def playlist(link):
     else:
         if inp == 1:
             for video in p.videos:
-                temp = list(set([stream.resolution for stream in video.streams if stream.resolution != None]))
+                temp = list(set([stream.resolution for stream in video.streams.filter(mime_type="video/mp4",progressive=True) if stream.resolution != None]))
 
             print(f"avalible resolusion: {set([s for s in temp])}")
 
@@ -116,7 +116,7 @@ def playlist(link):
                     i = 1
                     for video in p.videos:
                         print(f"starting the [{i}] video")
-                        video.streams.filter(res=reso,file_extension="mp4").first().download()
+                        video.streams.filter(res=reso,mime_type="video/mp4",progressive=True).first().download()
                         i += 1
                     
                 except:
