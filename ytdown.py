@@ -30,7 +30,10 @@ def video(yt, link):
         print("input a number")
     else:
         if inp == 1:
-            helper = set([stream.resolution for stream in yt.streams.filter(mime_type="video/mp4",progressive=True) if stream.resolution != None])
+            helper = set([
+                stream.resolution 
+                for stream in yt.streams.filter(mime_type="video/mp4",progressive=True) 
+                if stream.resolution != None])
             print(f"avalible resolusion: {helper}")
             print("select resolusion:")
             print("[1] 1080\t[2] 720")
@@ -82,7 +85,10 @@ def playlist(link):
     else:
         if inp == 1:
             for video in p.videos:
-                temp = list(set([stream.resolution for stream in video.streams.filter(mime_type="video/mp4",progressive=True) if stream.resolution != None]))
+                temp = list(set([
+                    stream.resolution 
+                    for stream in video.streams.filter(mime_type="video/mp4",progressive=True) 
+                    if stream.resolution != None]))
 
             print(f"avalible resolusion: {set([s for s in temp])}")
 
