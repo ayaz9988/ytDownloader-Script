@@ -4,8 +4,17 @@ from  colorama import init
 from termcolor import colored
 import pytube
 import os
+import tqdm
 
 init(autoreset=True)
+
+def progress(streams, chunk: bytes, bytes_remaining: int):
+    contentsize = streams.filesize
+    size = contentsize - bytes_remaining
+
+    print('\r' + '[Download progress]:[%s%s]%.2f%%;' % (
+    '█' * int(size*20/contentsize), ' '*(20-int(size*20/contentsize)), float(size/contentsize*100)), end='')
+
 
 def convert(seconds):
     seconds = seconds % (24 * 3600)
@@ -62,7 +71,7 @@ def video(yt, link):
                     reso = "144p"
                 else:
                     reso = ""
-                    print(colored("wrong input bye......try again", 'green'))
+                    print(colored("wrong input bye......try again", 'red'))
                 try:
                     print(colored("starting the video download", 'yellow'))
                     yt.streams.filter(res=reso,mime_type="video/mp4",progressive=True).first().download()
@@ -119,9 +128,9 @@ def playlist(link):
                     reso = "144p"
                 else:
                     reso = ""
-                    print(colored("wrong input bye......try again", 'green'))
+                    print(colored("wrong input bye......try again", 'red'))
                 try:
-                    print(colored("starting the playlist download", 'green'))
+                    print(colored("starting the playlist download", 'yellow'))
 
                     i = 1
                     for video in p.videos:
@@ -139,7 +148,7 @@ def playlist(link):
                 video.streams.get_highest_resolution().download()
             print(colored("Playlist successfullly downloaded from", 'green'), link)
         else:
-            print(colored("wrong input bye......try again", 'green'))
+            print(colored("wrong input bye......try again", 'red'))
 
 
 
@@ -156,7 +165,7 @@ def main():
             playlist(link)
         elif choice == 1:
             link = input("your youtube link: ")
-            yt = pytube.YouTube(link)
+            yt = pytube.YouTube(link, on_progress_callback=progress)
             print(colored("Title:", 'green'), yt.title)
             print(colored("Published date:", 'green'), yt.publish_date.strftime("%Y-%m-%d"))
             print(colored("Length of video:", 'green'), convert(yt.length), "seconds")
@@ -182,5 +191,4 @@ def main():
             print(colored("wrong choice", 'red'))
 
 if __name__ == '__main__':
-    main()
-
+    main()  
