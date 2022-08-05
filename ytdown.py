@@ -4,9 +4,18 @@ from  colorama import init
 from termcolor import colored
 import pytube
 import os
-import tqdm
+#import tqdm
 
 init(autoreset=True)
+
+resolusions = {
+    1 : '1080p',
+    2 : '720p',
+    3 : '480p',
+    4 : '360p',
+    5 : '240p',
+    6 : '144p'
+}
 
 def progress(streams, chunk: bytes, bytes_remaining: int):
     contentsize = streams.filesize
@@ -57,21 +66,13 @@ def video(yt, link):
             except:
                 print(colored("input a number", 'red'))
             else:
-                if inp == 1:
-                    reso = "1080p"
-                elif inp == 2:
-                    reso = "720p"
-                elif inp == 3:
-                    reso = "480p"
-                elif inp == 4:
-                    reso = "360p"
-                elif inp == 5:
-                    reso = "240p"
-                elif inp == 6:
-                    reso = "144p"
-                else:
+                
+                if inp <= 0:
                     reso = ""
                     print(colored("wrong input bye......try again", 'red'))
+                else:
+                    reso = resolusions[inp]
+
                 try:
                     print(colored("starting the video download", 'yellow'))
                     yt.streams.filter(res=reso,mime_type="video/mp4",progressive=True).first().download()
@@ -114,21 +115,12 @@ def playlist(link):
             except:
                 print(colored("input a number", 'red'))
             else:
-                if inp == 1:
-                    reso = "1080p"
-                elif inp == 2:
-                    reso = "720p"
-                elif inp == 3:
-                    reso = "480p"
-                elif inp == 4:
-                    reso = "360p"
-                elif inp == 5:
-                    reso = "240p"
-                elif inp == 6:
-                    reso = "144p"
-                else:
+                if inp <= 0:
                     reso = ""
                     print(colored("wrong input bye......try again", 'red'))
+                else:
+                    reso = resolusions[inp]
+
                 try:
                     print(colored("starting the playlist download", 'yellow'))
 
